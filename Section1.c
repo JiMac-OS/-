@@ -11,7 +11,7 @@ int read_line(char str[],int n);
 int main_Asd(void)
 {
    /*  char* words[100]; 
-    int n = 0;
+     int n = 0;
     char buffer[BUFFER_SIZE];
 
 

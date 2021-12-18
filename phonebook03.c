@@ -179,7 +179,7 @@ int search(char *name)
     {
         if (strcmp(name, names[i]) == 0)
         {
-            return i;
+             return i;
         }
     }
     return -1;

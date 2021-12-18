@@ -58,7 +58,7 @@ void load()
     FILE *fp = fopen(fileName, "r");
     if (fp == NULL)
     {
-        printf("Open failed. \n");
+         printf("Open failed. \n");
         return;
     }
 
