@@ -244,5 +244,3 @@ void reallocate()
     names = tmp1;
     numbers = tmp2;
 }
-
-sfdvfdv
