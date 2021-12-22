@@ -11,16 +11,21 @@ int main(void)
     {
         room=101;
         scanf("%d %d %d",&H,&W,&N);
+        if(N==1)
+        {
+            printf("101\n");
+            continue;
+        }
         for(int j=1;j<=W;j++)
         {
             for(int k=0;k<H;k++,N--)
             {
+                answer=room;
                 if(N==0)
                 {
                     printf("%d\n",answer);
                     break;
                 }
-                answer=room;
                 room+=100;
 
             }
