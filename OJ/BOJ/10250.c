@@ -1,37 +1,17 @@
 #include <stdio.h>
 int main(void)
 {
-    int T;
-    int H,W,N;
-    int answer;
-    int room;
-    scanf("%d",&T);
+    int T, H, W, N;
+    int i;
+    scanf("%d", &T);
 
-    for(int i=0;i<T;i++)
+    for (i = 0; i < T; i++)
     {
-        room=101;
-        scanf("%d %d %d",&H,&W,&N);
-        if(N==1)
-        {
-            printf("101\n");
-            continue;
-        }
-        for(int j=1;j<=W;j++)
-        {
-            for(int k=0;k<H;k++,N--)
-            {
-                answer=room;
-                if(N==0)
-                {
-                    printf("%d\n",answer);
-                    break;
-                }
-                room+=100;
-
-            }
-            if(N==0)break;
-            room=101+j;
-        }
+        scanf("%d %d %d", &H, &W, &N);
+        if (N % H != 0)
+            printf("%d%02d\n", N % H, N / H + 1);
+        else
+            printf("%d%02d\n", H, N / H);
     }
     return 0;
 }
