@@ -1,27 +1,30 @@
 #include <stdio.h>
-int PN(int n);
 int main(void)
 {
-    int N, M;
-    int i;
+    int N, M, i, j;
+    int arr[1000001] = {
+        0,
+    };
+    arr[1] = 1; // 1은 소수가 아니므로 1을 입력
 
-    scanf("%d %d", &N, &M);
-    for (i = N; i <= M; i++)
-        if (PN(i) == 1)
+    // 소수면 0, 소수가 아니면 1
+
+    scanf("%d %d", &M, &N);
+
+    for (i = 2; i <= N; i++)
+    {
+        if (arr[i] == 0)
+        {
+            for (j = 2; i * j <= N; j++)
+            {
+                arr[i * j] = 1;
+            }
+        }
+    }
+
+    for (i = M; i <= N; i++)
+        if (arr[i] == 0)
             printf("%d\n", i);
 
     return 0;
-}
-int PN(int n)
-{
-    int i;
-    for (i = 2; i < n; i++)
-    {
-        if (n % i == 0)
-            break;
-    }
-    if (n == i)
-        return 1;
-    else
-        return 0;
 }
