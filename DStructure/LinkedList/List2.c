@@ -1,3 +1,4 @@
+// 연결리스트의 맨 앞에 새로운 노드 삽입하기
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -17,7 +18,7 @@ void add_first(char *item)
 }
 
 void add_first(char *item, Node **ptr_head)
-// 첫번째 노드를 가리키는 포인터 head가 전역변수가 아닌 경우
+// 첫번째 노드를 가리키는 포인터 head가 전역변수가 아닌 경우 1
 {
     Node *temp = (Node *)malloc(sizeof(Node));
     temp->data = item;
@@ -25,6 +26,17 @@ void add_first(char *item, Node **ptr_head)
     *ptr_head = temp;
 // 이렇게 구현할 경우 이 함수는 다음과 같이 호출해야 한다.
 // add_first(item_to_store,&head)
+}
+
+Node *add_first(Node *head, char *item)
+// 첫번째 노드를 가리키는 포인터 head가 전역변수가 아닌 경우 2
+{
+    Node *temp = (Node *)malloc(sizeof(Node));
+    temp->data = item;
+    temp->next = head;
+    return temp;
+// 이렇게 구현할 경우 이 함수는 다음과 같이 호출해야 한다.
+// add_first(head, item_to_store)
 }
 
 int main(void)
