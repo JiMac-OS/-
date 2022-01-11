@@ -1,41 +1,27 @@
-//복습
+// 어떤 노드 뒤에 새로운 노드 삽입하기
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 struct node
 {
     char *data;
-    struct node *next;
+    struct node *next; //자기참조형 구조체
 };
 typedef struct node Node;
-Node *head = NULL;
-void add_first(char *item)
+int add_after(Node *prev, char *item)
 {
-    Node *tmp=(Node *)malloc(sizeof(Node));
-    tmp->data = item;
-    tmp->next = head;
-    head = tmp;
-}
-void add_first(Node **ptr,char *item)
-{
-    Node *tmp = (Node *)malloc(sizeof(Node));
-    tmp->data = item;
-    tmp->next = *ptr;
-    *ptr = tmp;
-}
-Node *add_first(char *item, Node *head)
-{
-    Node *tmp = (Node *)malloc(sizeof(Node));
-    tmp ->data = item;
-    tmp ->next = head;
-    return tmp;
+    if (prev == NULL)
+        return 0;
 
+    Node *tmp = (Node *)malloc(sizeof(Node));
+    tmp->data = item;
+    tmp->next = prev->next;
+    prev->next = tmp;
+    return 1;
+    //연결리스트에 새로운 노드를 삽입할 때 삽입할 위치의 바로 앞 노드의 주소가 필요하다. 즉 어떤 노드의 뒤에 삽입하는 것은 간단하지만, 반대로 어떤 노드의 앞에 삽입하는 것은 간단하지 않다.
 }
 int main(void)
 {
-    Node *tmp = (Node *)malloc(sizeof(Node));
-    tmp->data = "jihwan";
-    tmp->next = head;
-    head = tmp;
+
     return 0;
 }
