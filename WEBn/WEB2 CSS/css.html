@@ -5,73 +5,88 @@
     <title>WEB1 - CSS</title>
     <meta charset="utf-8">
     <style>
-        /* style 태그 */
+        body {
+            margin: 0;
+        }
+
+        /* style 태그    id선택자>class선택자>tag선택자 (힘의 차이)   */
+        /* 만약 선택자가 모두 같으면 가장 마지막에 등장하는 선택자가 우선순위 높음 */
         a {
             color: black;
             text-decoration: none;
         }
 
+        /* id선택자 */
+        /* class선택자 */
+
+
         h1 {
             font-size: 45px;
             text-align: center;
+            border-bottom: 1px solid gray;
+            margin: 0;
+            padding: 10px;
+        }
+
+        #grid ol {
+            border-right: 1px solid gray;
+            /* ol은 block level element 이므로 넓이 조정해줘 */
+            width: 100px;
+            margin: 0;
+            padding: 20px;
+            padding-left: 33px;
+        }
+
+        #grid {
+            display: grid;
+            grid-template-columns: 150px 1fr;
+        }
+
+        #grid #article {
+            padding-left: 25px;
         }
     </style>
 </head>
 
 <body>
     <h1><a href="index.html">WEB</a></h1>
-    <ol>
-        <li> <a href="1.html">HTML</a></li>
-        <li> <a href="2.html" style="color:red;text-decoration: underline">CSS</a></li>
-        <!-- style 속성 -->
-        <li> <a href="3.html">JavaScript</a></li>
-    </ol>
+    <div id="grid">
+        <ol>
+            <li> <a href="1.html">HTML</a></li>
+            <li> <a href="2.html">CSS</a></li>
+            <!-- style 속성 -->
+            <li> <a href="3.html">JavaScript</a></li>
+        </ol>
 
-    <!--     <h1><a href="index.html"><font color = "red">WEB</font></a></h1>
-    <ol>
-        <li> <a href="1.html"><font color = "red">HTML</font></a></li>
-        <li> <a href="2.html"><font color = "red">CSS</font></a></li>
-        <li> <a href="3.html"><font color = "red">JavaScript</font></a></li>
-    </ol> -->
+        <!-- l == list -->
+        <!-- ol == Ordered list -->
+        <!-- ul == Unordered list -->
 
-    <!-- l == list -->
-    <!-- ol == Ordered list -->
-    <!-- ul == Unordered list -->
-    <ul>
-        <li>egoing</li>
-        <li>k8805</li>
-        <li>jihwan</li>
-    </ul>
+        <div id="article">
+            <h2>CSS</h2>
+            <p>n CSS, selectors declare which part of the markup a style applies to by matching tags and attributes in
+                the
+                markup itself.
 
-    <h2>CSS</h2>
-    <p>n CSS, selectors declare which part of the markup a style applies to by matching tags and attributes in the
-        markup itself.
+                Selectors may apply to the following:
 
-        Selectors may apply to the following:
-
-        all elements of a specific type, e.g. the second-level headers h2
-        elements specified by attribute, in particular:
-        id: an identifier unique within the document, identified with a hash prefix e.g. #id
-        class: an identifier that can annotate multiple elements in a document, identified with a period prefix e.g.
-        .classname
-        elements depending on how they are placed relative to others in the document tree.
-        Classes and IDs are case-sensitive, start with letters, and can include alphanumeric characters, hyphens, and
-        underscores. A class may apply to any number of instances of any elements. An ID may only be applied to a single
-        element.
-
-        Pseudo-classes are used in CSS selectors to permit formatting based on information that is not contained in the
-        document tree. One example of a widely used pseudo-class is :hover, which identifies content only when the user
-        "points to" the visible element, usually by holding the mouse cursor over it. It is appended to a selector as in
-        a:hover or #elementid:hover. A pseudo-class classifies document elements, such as :link or :visited, whereas a
-        pseudo-element makes a selection that may consist of partial elements, such as ::first-line or
-        ::first-letter.[6]
-
-        Selectors may be combined in many ways to achieve great specificity and flexibility.[7] Multiple selectors may
-        be joined in a spaced list to specify elements by location, element type, id, class, or any combination thereof.
-        The order of the selectors is important. For example, div .myClass {color: red;} applies to all elements of
-        class myClass that are inside div elements, whereas .myClass div {color: red;} applies to all div elements that
-        are inside elements of class myClass. This is not to be confused with concatenated identifiers such as
-        div.myClass {color: red;} which applies to div elements of class myClass.</p>
+                all elements of a specific type, e.g. the second-level headers h2
+                elements specified by attribute, in particular:
+                id: an identifier unique within the document, identified with a hash prefix e.g. #id
+                class: an identifier that can annotate multiple elements in a document, identified with a period prefix
+                e.g.
+                .classname
+                elements depending on how they are placed relative to others in the document tree.
+                Classes and IDs are case-sensitive, start with letters, and can include alphanumeric characters,
+                hyphens,
+                and
+                underscores. A class may apply to any number of instances of any elements. An ID may only be applied to
+                a
+                single
+                element.
+            </p>
+        </div>
+    </div>
 </body>
 
 </html>
