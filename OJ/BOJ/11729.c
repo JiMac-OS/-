@@ -1,24 +1,36 @@
 #include <stdio.h>
-void HanoiTowerMove(int num, char from, char by, char to)
+#include <math.h>
+void move(int n, int start, int end);
+void hanoi(int n, int start, int end);
+void hanoi_sub(int n, int start, int end, int other);
+int main(void)
 {
-    if (num == 1)
-    {
-        printf("원반1을 %c에서 %c로 이동\n", from, to);
-    }
-    else
-    {
-        HanoiTowerMove(num - 1, from, to, by);
-        printf("원반%d를 %c에서 %c로 이동\n", num, from, to);
-        HanoiTowerMove(num - 1, by, from, to);
-    }
-}
+    int N;
+    scanf("%d", &N);
+    printf("%.0f\n", pow(2, N) - 1);
+    hanoi(N, 1, 3);
 
-int main(int arc, char **argv)
-{
-    printf("하노이 타워 재귀 구현\n");
-    HanoiTowerMove(3, 'A', 'B', 'C');
-    printf("\n");
-    printf("하노이 타워 반복문 구현\n");
-    Hanoi(3, 'A', 'B', 'C');
     return 0;
 }
+void move(int n, int start, int end)
+{
+    printf("%d %d\n", start, end);
+}
+void hanoi_sub(int n, int start, int end, int other)
+{
+    if (n == 1)
+        move(1, start, end);
+    else
+    {
+        hanoi_sub(n - 1, start, other, end);
+        move(n, start, end);
+        hanoi_sub(n - 1, other, end, start);
+    }
+}
+void hanoi(int n, int start, int end)
+{
+    hanoi_sub(n, start, end, 2);
+}
+// https://www.youtube.com/watch?v=uSSC0aKXbWQ
+// 그냥 입력하는 것이다. 이 유튜버 정독하자.
+// 그냥 문장을 코드로 입력만 하는 것이 바로 재귀이다.
