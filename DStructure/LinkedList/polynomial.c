@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #define MAX_POLYS 100
+#define BUFFER_LENGTH 100
 struct term
 {
     int coef; //계수
@@ -52,8 +53,8 @@ void add_term(int c, int e, Polynomial *poly)
             else
                 q->next = p->next;
 
-                poly->size--;
-                free(p);
+            poly->size--;
+            free(p);
         }
         return;
     }
@@ -62,7 +63,7 @@ void add_term(int c, int e, Polynomial *poly)
     term->coef = c;
     term->expo = e;
 
-    if(q==NULL) // 맨 앞에 삽입하는 경우
+    if (q == NULL) // 맨 앞에 삽입하는 경우
     {
         term->next = poly->first;
         poly->first = term;
@@ -72,8 +73,115 @@ void add_term(int c, int e, Polynomial *poly)
         term->next = p;
         q->next = term;
     }
-    poly->size++;    
+    poly->size++;
 }
+int eval(Polynomial *poly, int x) // 다항식의 값을 계산하는 함수
+{
+    int result = 0;
+    Term *t = poly->first;
+    while (t != NULL)
+    {
+        result += eval(t, x);
+        t = t->next;
+    }
+    return result;
+}
+int eval(Term *term, int x)
+{
+    int result = term->coef;
+    for (int i = 0; i < term->expo; i++)
+    {
+        result *= x;
+    }
+    return result;
+}
+void print_term(Term *pTerm)
+{
+    printf("%dx^%d", pTerm->coef, pTerm->expo);
+}
+void print_poly(Polynomial *p)
+{
+    printf("%c=", p->name);
+    Term *t = p->first;
+    while (t != NULL)
+    {
+        print_term(t);
+        printf("+");
+        t = t->next;
+    }
+}
+int read_line(FILE *fp, char str[], int n)
+{
+    int ch, i = 0;
+    while ((ch = fgetc(fp)) != '\n' && ch != EOF)
+        if (i < n)
+            str[i++] = ch;
+    str[i] = '\0';
+    return i;
+}
+void handle_definition(char *expression)
+{
+    erase_blanks(expression);
+
+    char *f_name = strtok(expression, "=");
+    if (f_name = NULL || strlen(f_name) != 1)
+    {
+        printf("Unsupported command.");
+        return 0;
+    }
+    char *exp_body = strtok(NULL, "=");
+    if (exp_body == NULL || strlen(exp_body) <= 0)
+    {
+        printf("Invalid expression format.--");
+        return;
+    }
+}
+void process_commend()
+{
+    char command_line[BUFFER_LENGTH];
+    char copied[BUFFER_LENGTH];
+    char *command, *arg1, *arg2;
+
+    while (1)
+    {
+        printf("$ ");
+        if (read_line(stdin, command_line, BUFFER_LENGTH) <= 0)
+            continue;
+        strcpy(copied, command_line); //입력 라인을 복사해 둔다.
+        command = strtok(command_line, " ");
+        if (strcmp(command, "print") == 0)
+        {
+            arg1 = strtok(NULL, " ");
+            if (arg1 == NULL)
+            {
+                printf("Invalid arguments.\n");
+                continue;
+            }
+            handle_print(arg1[0]);
+        }
+        else if (strcmp(command, "calc") == 0)
+        {
+            arg1 = strtok(NULL, " ");
+            if (arg1 == NULL)
+            {
+                printf("Invalid arguments.\n");
+                continue;
+            }
+            arg2 = strtok(NULL, " ");
+            if (arg2 == NULL)
+            {
+                printf("Invalid arguments.\n");
+                continue;
+            }
+            handle_calc(arg1[0], arg2);
+        }
+        else if (strcmp(command, "exit") == 0)
+            break;
+        else
+            handle_definition(copied);
+    }
+}
+
 int main(void)
 {
 
