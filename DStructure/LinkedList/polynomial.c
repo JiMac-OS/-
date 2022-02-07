@@ -173,6 +173,7 @@ void process_commend()
                 printf("Invalid arguments.\n");
                 continue;
             }
+
             handle_calc(arg1[0], arg2);
         }
         else if (strcmp(command, "exit") == 0)
