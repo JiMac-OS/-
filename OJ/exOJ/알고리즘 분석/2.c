@@ -48,7 +48,7 @@ int main(void)
 } */
 int mostOnes(int **A, int n)
 {
-    int i, j, row;
+    int i, j, row, jmax;
     i = j = row = 0;
     while ((i < n) && (j < n))
     {

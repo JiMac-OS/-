@@ -1,30 +1,50 @@
 #include <stdio.h>
-typedef struct a
+#include <stdlib.h>
+int mostOnes(int **arr, int n)
 {
-    int h, m, s;
-} time;
+    int i, j, row, jmax;
+    i = j = row = jmax = 0;
+
+    for (i = 0; i < n; i++)
+    {
+        while (((j < n) && (i < n)))
+        {
+            if (arr[i][j] == 0)
+                i++;
+            else
+            {
+                j++;
+                row = i;
+            }
+            if (jmax < row)
+                jmax = row;
+        }
+    }
+    return jmax;
+}
 int main(void)
 {
-    time t1, t2;
-    int gh, gm, gs;
-    scanf("%d %d %d", &t1.h, &t1.m, &t1.s);
-    scanf("%d %d %d", &t2.h, &t2.m, &t2.s);
-
-    gs = t2.s - t1.s;
-    gm = t2.m - t1.m;
-    gh = t2.h - t1.h;
-
-    if (gs < 0)
+    int n;
+    scanf("%d", &n);
+    int **arr;
+    arr = (int **)malloc(sizeof(int *) * n);
+    for (int i = 0; i < n; i++)
     {
-        gm--;
-        gs += 60;
+        arr[i] = (int *)malloc(sizeof(int) * n);
     }
-    if (gm < 0)
+
+    for (int i = 0; i < n; i++)
     {
-        gh--;
-        gm += 60;
+        for (int j = 0; j < n; j++)
+        {
+            scanf("%d", &arr[i][j]);
+        }
     }
-    printf("%d %d %d\n", gh, gm, gs);
+    printf("%d\n", mostOnes(arr, n));
+
+    for (int i = 0; i < n; i++)
+        free(arr[i]);
+    free(arr);
 
     return 0;
 }
