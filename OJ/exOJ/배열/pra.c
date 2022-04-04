@@ -1,40 +1,38 @@
-#include <stdio.h>
 #include <stdlib.h>
-int main()
+#include <stdio.h>
+
+int main(void)
 {
-    int arr[100][100];
     int N = 0, M = 0;
-    int save_N, save_M;
-    int i = 0, j = -1;
+    int arr[100][100];
+    int i, j;
+    int a, b;
     int num = 1;
-    int oper = 1;
-
+    a = b = 0;
     scanf("%d %d", &N, &M);
-    save_N = N;
-    save_M = M;
 
-    while (num <= save_N * save_M)
+    for (i = 0; i < M; i++)
     {
-        for (int l = 0; l < M; l++)
+        a = 0;
+        b = i;
+        while (a < N && b >= 0)
         {
-            j += oper;
-            arr[i][j] = num++;
+            arr[a++][b--] = num++;
         }
-        for (int l = 0; l < N - 1; l++)
-        {
-            i += oper;
-            arr[i][j] = num++;
-        }
-        oper *= -1;
-        N--;
-        M--;
     }
-    for (i = 0; i < save_N; i++)
+    for (j = 1; j < N; j++)
     {
-        for (j = 0; j < save_M; j++)
+        a = j;
+        b = M - 1;
+        while (a < N && b >= 0)
         {
-            printf(" %d", arr[i][j]);
+            arr[a++][b--] = num++;
         }
+    }
+    for (int i = 0; i < N; i++)
+    {
+        for (int j = 0; j < M; j++)
+            printf("%3d", arr[i][j]);
         printf("\n");
     }
     return 0;
