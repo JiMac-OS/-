@@ -1,118 +1,114 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-
 typedef struct node
 {
-    char *data;
-    struct node *next;
-} Node;
-Node *head = NULL;
-void add_first(char *item)
+    int coef;
+    int exp;
+    //다음 노드의 주소를 가르킬 구조체 포인터
+    struct node *link;
+} ListNode;
+typedef struct head
 {
-    Node *temp = (Node *)malloc(sizeof(Node));
-    temp->data = item;
-    temp->next = head;
-    head = temp;
+    ListNode *head;
+} ListHead;
+ListHead *createLinkedList()
+{
+    ListHead *L;
+    L = (ListHead *)malloc(sizeof(ListHead));
+    L->head = NULL;
+    return L;
 }
-int add_after(char *item, Node *prev)
+void addLastNode(ListHead *L, int coef, int exp)
 {
-    if (prev == NULL)
-        return 0;
+    ListNode *newnode;
+    ListNode *p;
+    newnode = (ListNode *)malloc(sizeof(ListNode));
+    newnode->coef = coef;
+    newnode->exp = exp;
+    newnode->link = NULL;
+    if (L->head == NULL)
+    {
+        L->head = newnode;
+        return;
+    }
+    else
+    {
+        p = L->head;
+        while (p->link != NULL)
+        {
+            p = p->link;
+        }
+        p->link = newnode;
+    }
+}
+void addPoly(ListHead *A, ListHead *B, ListHead *C)
+{
+    ListNode *pA = A->head;
+    ListNode *pB = B->head;
 
-    Node *temp = (Node *)malloc(sizeof(Node));
-    temp->data = item;
-    temp->next = prev->next;
-    prev->next = temp;
-    return 1;
+    int sum = 0;
+
+    while (pA && pB)
+    {
+        if (pA->exp == pB->exp)
+        {
+            sum = pA->coef + pB->coef;
+            addLastNode(C, sum, pA->exp);
+            pA = pA->link;
+            pB = pB->link;
+        }
+        else if (pA->exp > pB->exp)
+        {
+            addLastNode(C, pA->coef, pA->exp);
+            pA = pA->link;
+        }
+        else
+        {
+            addLastNode(C, pB->coef, pB->exp);
+            pB = pB->link;
+        }
+    }
+    for (; pA != NULL; pA = pA->link)
+        addLastNode(C, pA->coef, pA->exp);
+    for (; pB != NULL; pB = pB->link)
+        addLastNode(C, pB->coef, pB->exp);
 }
-Node *remove_first()
+void printPoly(ListHead *L)
 {
-    if (head == NULL)
+    ListNode *p = L->head;
+    while (p->link != NULL)
     {
-        return NULL;
-    }
-    else
-    {
-        Node *tmp = head;
-        head = head->next;
-        return tmp;
+        printf(" %d %d", p->coef, p->exp);
+        p = p->link;
     }
 }
-Node *remove_after(Node *prev)
+int main()
 {
-    Node *tmp = prev->next;
-    if (tmp == NULL)
-        return NULL;
-    else
+    int N;
+    int coef, exp;
+    ListHead *A, *B, *C;
+    A = createLinkedList();
+    B = createLinkedList();
+    C = createLinkedList();
+    scanf("%d", &N);
+    getchar();
+    for (int i = 0; i < N; i++)
     {
-        prev->next = tmp->next;
-        return tmp;
+        scanf("%d %d", &coef, &exp);
+        getchar();
+        addLastNode(A, coef, exp);
     }
-}
-Node *find(char *word)
-{
-    Node *p = head;
-    while (p != NULL)
+    scanf("%d", &N);
+    getchar();
+    for (int i = 0; i < N; i++)
     {
-        if (strcmp(p->data, word) == 0)
-            return p;
-        p = p->next;
+        scanf("%d %d", &coef, &exp);
+        getchar();
+        addLastNode(B, coef, exp);
     }
-    return NULL;
-}
-Node *get_node(int index)
-{
-    if (index < 0)
-        return NULL;
-    Node *p = head;
-    for (int i = 0; i < index && p != NULL; i++)
-        p = p->next;
-    return p;
-}
-int add(int index, char *item)
-{
-    if (index < 0)
-        return 0;
-    if (index == 0)
-    {
-        add_first(item);
-        return 1;
-    }
-    Node *prev = get_node(index - 1);
-    if (prev != NULL)
-    {
-        add_after(item, prev);
-        return 1;
-    }
+    addPoly(A, B, C);
+    printPoly(C);
+    printf("\n");
+
     return 0;
-}
-char *remove_LV1(int index)
-{
-    if (index < 0)
-        return NULL;
-    if (index == 0)
-        return remove_first();
-    Node *prev = get_node(index - 1);
-    if (prev == NULL)
-        return NULL;
-    else
-        return remove_after(prev);
-}
-char *remove_LV2(char *item)
-{
-    Node *p = head;
-    Node *q = NULL;
-    while (p != NULL && strcmp(p->data, item) != 0)
-    {
-        q = p;
-        p = p->next;
-    }
-
-    if (p == NULL)
-        return NULL;
-    if (q == NULL)
-        return remove_first();
-    else
-        return remove_after(q);
 }
